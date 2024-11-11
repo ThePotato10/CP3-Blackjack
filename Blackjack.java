@@ -1,8 +1,12 @@
 package solitaire;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
+
+import solitaire.Card.Suit;
 
 enum HandResult {
 	PLAYERWIN,
@@ -11,7 +15,25 @@ enum HandResult {
 }
 
 public class Blackjack {
-	private static Queue<Card> deck;
+	private static List<Card> deck;
+	public static ArrayList<Card> playerHand = new ArrayList<Card>();
+	public static ArrayList<Card> dealerHand = new ArrayList<Card>();
+	
+	private static void setupDeck() {
+		Suit[] suits = new Suit[]{Suit.Spades, Suit.Clubs, Suit.Hearts, Suit.Diamonds};
+		
+		for (int i = 1; i <= 13; i++) {
+			for (int j = 0; j < 4; j++) {
+				deck.add(new Card(i, suits[j]));
+			}
+		}
+		
+		Collections.shuffle(deck);
+	}
+	
+	public Blackjack() {
+		setupDeck();
+	}
 	
 	//the part of your program that's in charge of game rules goes here.
 	public static HandResult determineHandResult(ArrayList<Card> playerCards, ArrayList<Card> dealerCards) {
@@ -27,7 +49,16 @@ public class Blackjack {
 	}
 	
 	public static Card drawNextCard() {
-		return deck.poll();
+		Card card = deck.get(0);
+		deck.remove(0);
+		
+		return card;
+	}
+	
+	public static void addToHand(String hand, Card card) {
+		if (hand.equals("player")) playerHand.add(card);
+		else if (hand.equals("dealer")) dealerHand.add(card);
+		else throw new Error("Atempted to add to illegal hand");
 	}
 	
 	public static boolean determineBust(ArrayList<Card> hand) {
@@ -47,4 +78,10 @@ public class Blackjack {
 		
 		return false;
 	}
+	
+	public static void reset() {
+		playerHand = new ArrayList<Card>();
+		dealerHand = new ArrayList<Card>();
+	}
 }
+
