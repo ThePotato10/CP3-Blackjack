@@ -63,12 +63,12 @@ public class Card extends JPanel{
 		 * Converts the value of the card to a int
 		 * @param {String} value The value of the card 
 		 */
-		public static int valueInt(String value) {
+		public int valueInt(String value) {
 			
-			if(value.equals("J")) return 11;
-			if(value.equals("Q")) return 12;
-			if(value.equals("K")) return 13;
-			if(value.equals("A")) return 1;
+			if(value.equals("J")) return 10;
+			if(value.equals("Q")) return 10;
+			if(value.equals("K")) return 10;
+			if(value.equals("A")) return gameValue;
 			
 			return Integer.parseInt(value);
 		}
@@ -102,11 +102,16 @@ public class Card extends JPanel{
 		 */
 		public Card(int value, Suit suit) {
 			this.value = value;
+			this.gameValue = value;;
 			this.suit = suit;		
 			isReversed = false;
 			
 			if (value >= 11) {
 				gameValue = 10;
+			}
+			
+			if (value == 1) {
+				gameValue = 11;
 			}
 			
 			try {
