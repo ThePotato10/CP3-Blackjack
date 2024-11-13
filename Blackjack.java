@@ -15,7 +15,7 @@ enum HandResult {
 }
 
 public class Blackjack {
-	private static List<Card> deck;
+	private static ArrayList<Card> deck = new ArrayList<Card>();
 	public static ArrayList<Card> playerHand = new ArrayList<Card>();
 	public static ArrayList<Card> dealerHand = new ArrayList<Card>();
 	
@@ -66,7 +66,15 @@ public class Blackjack {
 		
 		for (int i = 0; i < hand.size(); i++) handValue += hand.get(i).gameValue;
 		
-		if (handValue > 21) return true;
+		if (handValue > 21) {
+			for (int i = 0; i < hand.size(); i++) {
+				if (hand.get(i).gameValue == 11) {
+					handValue -= 10;
+					hand.get(i).setAceGameValue(1);
+				}
+			}
+			return true;
+		}
 		else return false;
 	}
 	
@@ -84,4 +92,3 @@ public class Blackjack {
 		dealerHand = new ArrayList<Card>();
 	}
 }
-
