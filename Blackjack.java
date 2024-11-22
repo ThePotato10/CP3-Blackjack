@@ -71,11 +71,33 @@ public class Blackjack {
 				if (hand.get(i).gameValue == 11) {
 					handValue -= 10;
 					hand.get(i).setAceGameValue(1);
+					break;
 				}
 			}
-			return true;
+			
+			if (handValue > 21) return true;
 		}
-		else return false;
+		
+		return false;
+	}
+	
+	
+	public static int determineHandValue(ArrayList<Card> hand) {
+		int handValue = 0;
+		
+		for (int i = 0; i < hand.size(); i++) handValue += hand.get(i).gameValue;
+		
+		if (handValue > 21) {
+			for (int i = 0; i < hand.size(); i++) {
+				if (hand.get(i).gameValue == 11) {
+					handValue -= 10;
+					hand.get(i).setAceGameValue(1);
+					break;
+				}
+			}
+		}
+		
+		return handValue;
 	}
 	
 	public static boolean determineBlackjack(ArrayList<Card> hand) {
@@ -90,5 +112,7 @@ public class Blackjack {
 	public static void reset() {
 		playerHand = new ArrayList<Card>();
 		dealerHand = new ArrayList<Card>();
+		
+		setupDeck();
 	}
 }
